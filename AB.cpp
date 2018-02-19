@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstring>
+#include <csignal>
 
 using namespace std;
 
@@ -20,6 +21,23 @@ int Register4[] = { 0, 0 };
 int Mode = 0;
 int Memory[1024];
 int Temp;
+
+int ipow(int base, int exponent)
+{
+    int retval = 1;
+
+    if ( exponent < 0 )
+        raise(SIGFPE);
+
+    while ( exponent )
+    {
+        retval *= ( exponent & 1 ) ? base : 1;
+        exponent /= 2;
+        base *= base;
+    }
+
+    return retval;
+}
 
 int main(int argc, char *argv[])
 {
@@ -56,13 +74,12 @@ int main(int argc, char *argv[])
         if ( Program[Position] == "o" ) { Register3 = Register1 and Register2 ;}
         if ( Program[Position] == "p" ) { Register3 = Register1 or Register2 ;}
         if ( Program[Position] == "q" ) { Register3 = Register1 xor Register2 ;}
-        if ( Program[Position] == "q" ) { Register3 = Register1 xor Register2 ;}
         if ( Program[Position] == "r" ) { Register3 = Register1 + Register2 ;}
         if ( Program[Position] == "s" ) { Register3 = Register1 - Register2 ;}
         if ( Program[Position] == "t" ) { Register3 = Register1 * Register2 ;}
         if ( Program[Position] == "u" ) { Register3 = Register1 / Register2 ;}
         if ( Program[Position] == "v" ) { Register3 = Register1 % Register2 ;}
-        if ( Program[Position] == "w" ) { Register3 = Register1 ^ Register2 ;}
+        if ( Program[Position] == "w" ) { Register3 = ipow(Register1, Register2) ;}
         if ( Program[Position] == "x" ) { Register1 = 0 ;}
         if ( Program[Position] == "y" ) { Register2 = 0 ;}
         if ( Program[Position] == "z" ) { Register3 = 0 ;}
