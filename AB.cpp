@@ -41,19 +41,29 @@ int ipow(int base, int exponent)
 
 int main(int argc, char *argv[])
 {
-    FILE * FileInd;
-    
-    FileInd = fopen(argv[1],"r");
-    
+    if ( argc != 2 )
+	{
+		fprintf(stderr, "Usage: %s FILE\n", argv[0]);
+		return 1;
+	}
+
+    FILE * FileInd = fopen(argv[1], "r");
+
+	if ( FileInd == NULL )
+	{
+		fprintf(stderr, "Could not open file '%s'.\n", argv[1]);
+		return 1;
+	}
+
     do {
         Character = getc(FileInd);
         Program[Num_char] = Character;
         Num_char ++;
-        
+
         } while ( Character != EOF );
-    
+
     fclose(FileInd);
-    
+
     do {
         NewPosition = Position;
 
@@ -109,9 +119,9 @@ int main(int argc, char *argv[])
         if ( Program[Position] == "X" ) { Register4[Mode] -= 100 ;}
         if ( Program[Position] == "Y" ) { Register4[Mode] = 0 ;}
         if ( Program[Position] == "Z" ) { Mode = ( Mode + 1 ) % 2 ;}
-        
+
         Position = (Position == NewPosition) ? Position + 1 : NewPosition;
         } while ( Position <= Num_char );
-        
-    return ( 1 );
+
+    return 0;
 }
