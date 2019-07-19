@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
         if ( Program[Position] == 'Z' ) { Mode = ( Mode + 1 ) % 2 ;}
 
         Position = (Position == NewPosition) ? Position + 1 : NewPosition;
-        } while ( Position <= Num_char );
+        } while ( Position < Num_char );
 
     return 0;
 }
