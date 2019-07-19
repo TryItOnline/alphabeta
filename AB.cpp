@@ -48,7 +48,7 @@ void error(const char* msg)
 
 void checkmem(int addr, const char* errormsg)
 {
-	if(!(addr >= 0 && addr < countof(Memory))) error(errormsg);
+	if(!(addr >= 0 && addr < (int)countof(Memory))) error(errormsg);
 }
 
 int main(int argc, char *argv[])
